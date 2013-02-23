@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Jasmine Spec Runner</title>
+
+  
+  
+  <script src="./.grunt/grunt-contrib-jasmine/jasmine.js"></script>
+  
+  <script src="./.grunt/grunt-contrib-jasmine/jasmine-html.js"></script>
+  
+  <script src="./app/scripts/require-config.js"></script>
+  
+  <script src="./require-config-spec.js"></script>
+  
+  <script src="./app/vendor/require.js"></script>
+  
+  <script src="./app/vendor/zepto.js"></script>
+  
+  <script src="./app/vendor/jasmine-zepto.js"></script>
+  
+  
+
+  <script src=".grunt/grunt-contrib-jasmine/require.js"></script>
+  <script>
+    
+  </script>
+  
+  <link rel="stylesheet" type="text/css" href=".grunt/grunt-contrib-jasmine/jasmine.css">
+  
+  <script>
+    require([
+      
+    ],
+    function(){
+      require(['./spec/home/welcome-message-spec.js','./.grunt/grunt-contrib-jasmine/reporter.js'], function(){
+        require(['./.grunt/grunt-contrib-jasmine/jasmine-helper.js'], function(){
+          // good to go! Our tests should already be running.
+        })
+      })
+    }
+    )
+  </script>
+</head>
+<body>
+</body>
+</html>

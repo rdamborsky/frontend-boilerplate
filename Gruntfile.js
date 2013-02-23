@@ -1,5 +1,11 @@
 /*jslint nomen: true, plusplus: true, sloppy: true, white: true */
-/*global module */
+/*global module, require */
+
+var path = require('path'),
+	lrSnippet = require('grunt-contrib-livereload/lib/utils').livereloadSnippet,
+	folderMount = function folderMount(connect, point) {
+		return connect.static(path.resolve(point));
+	};
 
 module.exports = function(grunt) {
 
@@ -7,9 +13,10 @@ module.exports = function(grunt) {
 			main: 'app/scripts/app.js',
 			models: 'app/scripts/models/**/*.js',
 			views: 'app/scripts/views/**/*.js',
+			specs: 'spec/**/*.js',
 			templates: 'app/templates/**/*.html'
 		},
-		jslintFiles = [Files.main, Files.models, Files.views];
+		jslintFiles = [Files.main, Files.models, Files.views, Files.specs];
 
 	grunt.initConfig({
 
@@ -38,6 +45,48 @@ module.exports = function(grunt) {
 			files: jslintFiles
 		},
 
+		jasmine: {
+			// generates spec runner
+			all: {
+				options: {
+					specs: Files.specs,
+					helpers: [
+						'app/scripts/require-config.js',
+						'require-config-spec.js',
+						'app/vendor/require.js',
+						'app/vendor/zepto.js',
+						'app/vendor/jasmine-zepto.js'
+					],
+					outfile: 'spec-runner.html',
+					template: require('grunt-template-jasmine-requirejs')
+				}
+			}
+		},
+
+		// spawning up local server for livereload
+		connect: {
+			livereload: {
+				options: {
+					port: 9000,
+					middleware: function(connect, options) {
+						return [lrSnippet, folderMount(connect, '.')];
+					}
+				}
+			}
+		},
+
+		// monitoring files changes
+		// to keep in autoload loop, watch cannot be used
+		// NOTE: check the possibility of merge watch and regarde
+		regarde: {
+			runner: {
+				files: [Files.main, Files.models, Files.views, Files.templates, Files.specs],
+				tasks: ['livereload']
+			}
+		},
+
+		// watch stays in the loop if jslint fails, regarde does not...
+		// NOTE: check "force" param of either jslint or regarde, whether it could help
 		watch: {
 			javascripts: {
 				files: jslintFiles,
@@ -57,6 +106,13 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-handlebars');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-jslint');
+	grunt.loadNpmTasks('grunt-contrib-jasmine');
+	grunt.loadNpmTasks('grunt-contrib-livereload');
+	grunt.loadNpmTasks('grunt-contrib-connect');
+	grunt.loadNpmTasks('grunt-regarde');
+
+	grunt.registerTask('jasmine-generate', ['jasmine:all:build']);
+	grunt.registerTask('jasmine-run', ['livereload-start', 'connect', 'regarde']);
 
 	grunt.registerTask('default', ['watch']);
 
