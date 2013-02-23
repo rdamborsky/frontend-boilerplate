@@ -2,17 +2,20 @@
 /*global define */
 
 define([
-	'backbone'
-], function(Backbone) {
+	'backbone',
+	'templates/home/welcome-message'
+], function(Backbone, template) {
 
 	return Backbone.View.extend({
+
+		template: template,
 
 		initialize: function() {
 			console.log('Welcome message view instantiated.');
 		},
 
 		render: function() {
-			this.$el.html("HiJACK!");
+			this.$el.html(this.template(this.model.toJSON()));
 			return this;
 		}
 

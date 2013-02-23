@@ -7,7 +7,8 @@ var require = {
 	paths: {
 		lodash: '../vendor/lodash',
 		zepto: '../vendor/zepto',
-		backbone: '../vendor/backbone'
+		backbone: '../vendor/backbone',
+		handlebars: '../vendor/handlebars.runtime'
 	},
 
 	shim: {
@@ -17,6 +18,9 @@ var require = {
 		backbone: {
 			exports: 'Backbone',
 			deps: ['lodash', 'zepto']
+		},
+		handlebars: {
+			exports: 'Handlebars'
 		}
 	}
 

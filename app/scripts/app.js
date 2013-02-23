@@ -9,7 +9,9 @@ require([
 
 	var model, view;
 
-	model = new Model();
+	model = new Model({
+		message: 'HiJACK!'
+	});
 	view = new View({
 		model: model,
 		el: $('#container')
