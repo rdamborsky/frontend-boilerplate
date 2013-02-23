@@ -1,0 +1,10 @@
+{
+  "name": "frontend-boilerplate",
+  "version": "0.1.0",
+  "description": "Frontend development boilerplate",
+  "devDependencies": {
+  },
+  "author": "Roman Damborsky",
+  "license": "MIT",
+  "readmeFilename": "README.md"
+}
