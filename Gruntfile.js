@@ -4,8 +4,12 @@
 module.exports = function(grunt) {
 
 	var Files = {
+			main: 'app/scripts/app.js',
+			models: 'app/scripts/models/**/*.js',
+			views: 'app/scripts/views/**/*.js',
 			templates: 'app/templates/**/*.html'
-		};
+		},
+		jslintFiles = [Files.main, Files.models, Files.views];
 
 	grunt.initConfig({
 
@@ -27,7 +31,18 @@ module.exports = function(grunt) {
 			}
 		},
 
+		// until there is either multitask plugin or
+		// it is possible to lint changed files only,
+		// whole code base has to be linted at once
+		jslint: {
+			files: jslintFiles
+		},
+
 		watch: {
+			javascripts: {
+				files: jslintFiles,
+				tasks: ['jslint']
+			},
 			// Until there is a way how to get changed only files list,
 			// it's necessary to run a task on a whole
 			// https://github.com/gruntjs/grunt-contrib-watch/issues/14
@@ -41,6 +56,7 @@ module.exports = function(grunt) {
 
 	grunt.loadNpmTasks('grunt-contrib-handlebars');
 	grunt.loadNpmTasks('grunt-contrib-watch');
+	grunt.loadNpmTasks('grunt-jslint');
 
 	grunt.registerTask('default', ['watch']);
 
