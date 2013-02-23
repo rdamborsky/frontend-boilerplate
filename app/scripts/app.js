@@ -2,8 +2,19 @@
 /*global require */
 
 require([
-], function() {
+	'models/home/welcome-message',
+	'views/home/welcome-message',
+	'zepto'
+], function(Model, View, $) {
 
-	console.log('HiJack!');
+	var model, view;
+
+	model = new Model();
+	view = new View({
+		model: model,
+		el: $('#container')
+	});
+
+	view.render();
 
 });
