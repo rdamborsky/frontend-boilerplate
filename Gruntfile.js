@@ -12,11 +12,12 @@ module.exports = function(grunt) {
 	var Files = {
 			main: 'app/scripts/app.js',
 			models: 'app/scripts/models/**/*.js',
+			collections: 'app/scripts/collections/**/*.js',
 			views: 'app/scripts/views/**/*.js',
 			specs: 'spec/**/*.js',
 			templates: 'app/templates/**/*.html'
 		},
-		jslintFiles = [Files.main, Files.models, Files.views, Files.specs];
+		jslintFiles = [Files.main, Files.models, Files.collections, Files.views, Files.specs];
 
 	grunt.initConfig({
 
@@ -80,7 +81,7 @@ module.exports = function(grunt) {
 		// NOTE: check the possibility of merge watch and regarde
 		regarde: {
 			runner: {
-				files: [Files.main, Files.models, Files.views, Files.templates, Files.specs],
+				files: [Files.main, Files.models, Files.collections, Files.views, Files.templates, Files.specs],
 				tasks: ['livereload']
 			}
 		},
